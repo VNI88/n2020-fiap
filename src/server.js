@@ -3,6 +3,7 @@ const db = require('./db/config');
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
 const  swaggerDocument = require('./swagger.ts');
+require ('dotenv').config()
 
 class App {
   constructor() {
@@ -13,13 +14,13 @@ class App {
     this.routes();
     this.docs();
 
-    this.express.listen(3001, () =>
+    this.express.listen(process.env.PORT || 3001, () =>
       console.log('API running in PORT 3001')
     );
   }
 
   database() {
-    mongoose.connect(db.uri, { useNewUrlParser: true });
+    mongoose.connect(process.env.MONGODB_URI || db.uri, { useNewUrlParser: true });
   }
 
   middleware() {
